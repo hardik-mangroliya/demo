@@ -1,51 +1,84 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:demo/bg%20image.dart';
+import 'package:demo/drawer.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
     title: "AWESOME APP",
     home: HomePage(),
+    theme: ThemeData(
+      primarySwatch: Colors.purple,
+    ),
   ));
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  TextEditingController nameController = TextEditingController();
+  var myText = "change Me";
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("AWESOME APP"),
-        ),
-        body: Padding(
-            padding: const EdgeInsets.all(8.9),
-            child: Align(
-                alignment: Alignment.center,
-                child: Container(
-                  color: Colors.black,
-                  width: 200,
-                  height: 400,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        width: 100,
-                        height: 100,
-                        color: Colors.red,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        width: 100,
-                        height: 100,
-                        color: Colors.green,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        width: 100,
-                        height: 100,
-                        color: Colors.yellow,
-                      ),
-                    ],
+      backgroundColor: Colors.grey,
+      appBar: AppBar(
+        title: const Text("AWESOME APP"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Card(
+            child: Column(
+              children: <Widget>[
+                BgImage(),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  myText,
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                    controller: nameController,
+                    keyboardType: TextInputType.text,
+                    // obscureText: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: "ENTER SOMETHING HERE:",
+                      labelText: "NAME",
+                    ),
                   ),
-                ))));
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+      drawer: MyDrawer(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          myText = nameController.text;
+          setState(() {});
+        },
+        child: const Icon(Icons.refresh),
+      ),
+    );
   }
 }
