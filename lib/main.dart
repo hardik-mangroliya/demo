@@ -4,14 +4,24 @@
 
 import 'package:demo/drawer.dart';
 import 'package:demo/pages/loginpage.dart';
+import 'package:demo/utils%20/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-void main() {
+import 'package:shared_preferences/shared_preferences.dart';
+
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Constants.prefs = await SharedPreferences.getInstance();
+
   runApp(MaterialApp(
+    debugShowMaterialGrid: false,
     title: "AWESOME APP",
-    home: LoginPage(),
+    debugShowCheckedModeBanner: false,
+    home:
+        Constants.prefs.getBool("LoggedIn") == true ? HomePage() : LoginPage(),
     theme: ThemeData(
       primarySwatch: Colors.purple,
     ),
@@ -50,6 +60,14 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.grey,
       appBar: AppBar(
         title: Text("AWESOME APP"),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () {
+                Constants.prefs.setBool("LoggedIn", false);
+                Navigator.pushReplacementNamed(context, "/login");
+              })
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
