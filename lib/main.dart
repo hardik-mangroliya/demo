@@ -3,6 +3,7 @@
 // import 'package:demo/bg%20image.dart';
 
 import 'package:demo/drawer.dart';
+import 'package:demo/pages/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -10,7 +11,7 @@ import 'dart:convert';
 void main() {
   runApp(MaterialApp(
     title: "AWESOME APP",
-    home: HomePage(),
+    home: LoginPage(),
     theme: ThemeData(
       primarySwatch: Colors.purple,
     ),
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
                       title: Text(data[index]["title"]),
-                      subtitle: Text("ID: ${data[index]["id"]}"),
+                      subtitle: Text("ID:  ${data[index]["id"]}"),
                       leading: Image.network(data[index]["url"]),
                     ),
                   );
